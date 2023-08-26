@@ -49,7 +49,16 @@ if uploaded_file is not None:
 
     # load it into Chroma
     db = Chroma.from_documents(texts, embeddings_model)
-
+    
+    #Stream 받아 줄 Hander 만들기
+    from langchain.callbacks.base import BaseCallbackHandler
+    class StreamHandler(BaseCallbackHandler):
+        def __init__(self, container, initial_text=""):
+            self.container = container
+            self.text=initial_text
+        def on_llm_new_token(self, token: str, **kwargs) -> None:
+            self.text+=token
+            self.container.markdown(self.text)
     #Question
     st.header("PDF에게 질문해보세요!!")
     question = st.text_input('질문을 입력하세요')
