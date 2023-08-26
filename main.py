@@ -53,9 +53,17 @@ if uploaded_file is not None:
     st.header("PDF에게 질문해보세요!!")
     question = st.text_input('질문을 입력하세요')
 
+    # if st.button('질문하기'):
+    #     with st.spinner('Wait for it...'):
+    #         llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+    #         qa_chain = RetrievalQA.from_chain_type(llm,retriever=db.as_retriever())
+    #         result = qa_chain({"query": question})
+    #         st.write(result["result"])
+    
     if st.button('질문하기'):
         with st.spinner('Wait for it...'):
-            llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+            chat_box = st.empty()
+            stream_hander = StreamHandler(chat_box)
+            llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0, openai_api_key=openai_key, streaming=True, callbacks=[stream_hander])
             qa_chain = RetrievalQA.from_chain_type(llm,retriever=db.as_retriever())
-            result = qa_chain({"query": question})
-            st.write(result["result"])
+            qa_chain({"query": question})
