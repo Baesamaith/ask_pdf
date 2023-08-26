@@ -1,1 +1,1 @@
-angchain openai pypdf chromadb tiktoken pysqlite3-binary
+langchain openai pypdf chromadb tiktoken pysqlite3-binary
