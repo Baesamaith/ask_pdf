@@ -11,6 +11,7 @@ from langchain.chains import RetrievalQA
 import streamlit as st
 import tempfile
 import os
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
 #제목
 st.title("ChatPDF")
