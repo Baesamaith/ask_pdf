@@ -17,7 +17,7 @@ st.title("ChatPDF")
 st.write("---")
 
 #파일 업로드
-uploaded_file = st.file_uploader("PDF 파일을 올려주세요!",type=['pdf'])
+uploaded_file = st.file_uploader("분석을 위한 PDF 파일을 올려주세요!",type=['pdf'])
 st.write("---")
 
 def pdf_to_document(uploaded_file):
@@ -50,11 +50,11 @@ if uploaded_file is not None:
     db = Chroma.from_documents(texts, embeddings_model)
     
     #Question
-    st.header("PDF에게 질문해보세요!!")
+    st.header("배사마입니다. PDF에게 질문해보세요!!")
     question = st.text_input('질문을 입력하세요')
 
     if st.button('질문하기'):
-        with st.spinner('Wait for it...'):
+        with st.spinner('기다리고 있어요...'):
             llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
             qa_chain = RetrievalQA.from_chain_type(llm,retriever=db.as_retriever())
             result = qa_chain({"query": question})
